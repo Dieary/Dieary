@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,9 +22,10 @@ public class CalendarActivity extends AppCompatActivity {
     public String readDay = null;
     public String str = null;
     public CalendarView calendarView;
-    public Button cha_Btn, del_Btn, save_Btn, share_Btn;
+    public Button cha_Btn, insert_Btn, del_Btn, save_Btn, share_Btn;
     public TextView diaryTextView, textView2, textView3;
     public EditText contextEditText;
+    public ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,12 +35,16 @@ public class CalendarActivity extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarView);
         diaryTextView = findViewById(R.id.diaryTextView);
         save_Btn = findViewById(R.id.save_Btn);
+        insert_Btn = findViewById(R.id.insert_Btn);
         del_Btn = findViewById(R.id.del_Btn);
         cha_Btn = findViewById(R.id.cha_Btn);
         share_Btn = findViewById(R.id.share_Btn);
         textView2 = findViewById(R.id.textView2);
         textView3 = findViewById(R.id.textView3);
         contextEditText = findViewById(R.id.contextEditText);
+        imageView = findViewById(R.id.imageView);
+
+        imageView.setVisibility(View.INVISIBLE);
 
         // CalendarView 첫 화면
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
@@ -50,9 +56,11 @@ public class CalendarActivity extends AppCompatActivity {
                 save_Btn.setVisibility(View.VISIBLE);
                 contextEditText.setVisibility(View.VISIBLE);
                 textView2.setVisibility(View.INVISIBLE);
+                insert_Btn.setVisibility(View.INVISIBLE);
                 cha_Btn.setVisibility(View.INVISIBLE);
                 del_Btn.setVisibility(View.INVISIBLE);
                 share_Btn.setVisibility(View.INVISIBLE);
+                imageView.setVisibility(View.INVISIBLE);
                 diaryTextView.setText(String.format("%d / %d / %d", year, month + 1, dayOfMonth));
                 contextEditText.setText("");
                 checkDay(year, month, dayOfMonth);
@@ -68,9 +76,11 @@ public class CalendarActivity extends AppCompatActivity {
                 str = contextEditText.getText().toString();
                 textView2.setText(str);
                 save_Btn.setVisibility(View.INVISIBLE);
+                insert_Btn.setVisibility(View.VISIBLE);
                 cha_Btn.setVisibility(View.VISIBLE);
                 del_Btn.setVisibility(View.VISIBLE);
                 share_Btn.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.INVISIBLE);
                 contextEditText.setVisibility(View.INVISIBLE);
                 textView2.setVisibility(View.VISIBLE);
             }
@@ -98,10 +108,35 @@ public class CalendarActivity extends AppCompatActivity {
             textView2.setText(str);
 
             save_Btn.setVisibility(View.INVISIBLE);
+            insert_Btn.setVisibility(View.VISIBLE);
             cha_Btn.setVisibility(View.VISIBLE);
             del_Btn.setVisibility(View.VISIBLE);
             share_Btn.setVisibility(View.VISIBLE);
-    
+            imageView.setVisibility(View.INVISIBLE);
+
+            insert_Btn.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    contextEditText.setVisibility(View.VISIBLE);
+                    textView2.setVisibility(View.INVISIBLE);
+                    contextEditText.setText(str);
+
+                    save_Btn.setVisibility(View.INVISIBLE);
+                    insert_Btn.setVisibility(View.VISIBLE);
+                    cha_Btn.setVisibility(View.VISIBLE);
+                    del_Btn.setVisibility(View.VISIBLE);
+                    share_Btn.setVisibility(View.VISIBLE);
+                    imageView.setVisibility(View.VISIBLE);
+
+                    int[] images = new int[] {R.drawable.chicken, R.drawable.salade, R.drawable.hambugar, R.drawable.raman, R.drawable.apple};
+                    int imageId = (int)(Math.random() * images.length);
+                    imageView.setImageResource(images[imageId]);
+                }
+
+            });
+
             // 수정버튼을 누르면 text를 수정할 수 있음
             cha_Btn.setOnClickListener(new View.OnClickListener()
             {
@@ -113,9 +148,11 @@ public class CalendarActivity extends AppCompatActivity {
                     contextEditText.setText(str);
 
                     save_Btn.setVisibility(View.VISIBLE);
+                    insert_Btn.setVisibility(View.INVISIBLE);
                     cha_Btn.setVisibility(View.INVISIBLE);
                     del_Btn.setVisibility(View.INVISIBLE);
                     share_Btn.setVisibility(View.INVISIBLE);
+                    imageView.setVisibility(View.INVISIBLE);
 
                     textView2.setText(contextEditText.getText());
                 }
@@ -132,9 +169,11 @@ public class CalendarActivity extends AppCompatActivity {
                     contextEditText.setVisibility(View.VISIBLE);
 
                     save_Btn.setVisibility(View.VISIBLE);
+                    insert_Btn.setVisibility(View.INVISIBLE);
                     cha_Btn.setVisibility(View.INVISIBLE);
                     del_Btn.setVisibility(View.INVISIBLE);
                     share_Btn.setVisibility(View.INVISIBLE);
+                    imageView.setVisibility(View.INVISIBLE);
 
                     removeDiary(readDay);
                 }
@@ -150,9 +189,11 @@ public class CalendarActivity extends AppCompatActivity {
                     contextEditText.setVisibility(View.VISIBLE);
 
                     save_Btn.setVisibility(View.VISIBLE);
+                    insert_Btn.setVisibility(View.INVISIBLE);
                     cha_Btn.setVisibility(View.INVISIBLE);
                     del_Btn.setVisibility(View.INVISIBLE);
                     share_Btn.setVisibility(View.INVISIBLE);
+                    imageView.setVisibility(View.INVISIBLE);
 
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
@@ -171,9 +212,11 @@ public class CalendarActivity extends AppCompatActivity {
                 diaryTextView.setVisibility(View.VISIBLE);
 
                 save_Btn.setVisibility(View.VISIBLE);
+                insert_Btn.setVisibility(View.INVISIBLE);
                 cha_Btn.setVisibility(View.INVISIBLE);
                 del_Btn.setVisibility(View.INVISIBLE);
                 share_Btn.setVisibility(View.INVISIBLE);
+                imageView.setVisibility(View.INVISIBLE);
 
                 contextEditText.setVisibility(View.VISIBLE);
             }

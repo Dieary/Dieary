@@ -51,7 +51,7 @@ public class MealActivity extends AppCompatActivity{
     Toast toast;
     int[] tree = new int[]{R.drawable.tree1, R.drawable.tree2, R.drawable.tree3,
             R.drawable.tree3, R.drawable.tree4, R.drawable.tree5, R.drawable.tree6};
-    int position = 0;
+    int position = -1;
     ImageView treeImage;
     TextView Date, secondTV;
     EditText secondET;
@@ -63,7 +63,7 @@ public class MealActivity extends AppCompatActivity{
     int minute = now.getMinute();
     Vibrator vib;
 
-    int second, key;
+    int second, key, treeSecond, treeGrow;
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     String time;
@@ -119,8 +119,6 @@ public class MealActivity extends AppCompatActivity{
         //<--알람 -->
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             alarm_timepicker = findViewById(R.id.time_picker);
-            int sethour = alarm_timepicker.getHour();
-            int setminute = alarm_timepicker.getMinute();
 
             //<-- 타이머 -->
             Date = findViewById(R.id.Date);
@@ -147,10 +145,22 @@ public class MealActivity extends AppCompatActivity{
 
                     key = second;
 
+                    treeGrow = (1000 * 60 * 40) / 5 ;
+                    treeSecond = 0;
+                    int sethour = alarm_timepicker.getHour();
+                    int setminute = alarm_timepicker.getMinute();
+
                     Timer timer = new Timer();
                     TimerTask timerTask = new TimerTask(){
                         @Override
                         public void run(){
+                            if(treeSecond == treeGrow){
+                                onSwitch(null);
+                                treeSecond++;
+                                treeGrow += treeGrow;
+                            } else{
+                                treeSecond++;
+                            }
                             if (second != 0) {
                                 second--;
                             }
@@ -162,7 +172,7 @@ public class MealActivity extends AppCompatActivity{
                                 //타이머 종료시 알람(삼켜도 된다는 알람), 진동
                                 postToastMessage("꿀꺽!");
                                 vib.vibrate(500);
-                                if(hour== sethour && minute == setminute){
+                                if(now.getHour() == sethour && now.getMinute() == setminute){
                                     //식사시간 종료 알람
                                     postToastMessage("식사 사간이 종료되었습니다.\n자동으로 메뉴로 돌아갑니다.");
                                 }
@@ -185,7 +195,6 @@ public class MealActivity extends AppCompatActivity{
             runTime();
         }
     }
-
     public void runTime(){
         Thread thread = new Thread(new Runnable(){
             @Override

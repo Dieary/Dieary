@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+   <!-- <ImageView
+        android:layout_width="300dp"
+        android:layout_height="270dp"
+        android:id="@+id/tree1_iv"
+        android:background="@color/transparent"
+        android:src="@drawable/tree1"
+        android:scaleType="fitEnd"
+        android:visibility="visible"/>-->
+
+   <!-- <ImageView
+        android:layout_width="300dp"
+        android:layout_height="270dp"
+        android:id="@+id/tree2_iv"
+        android:src="@drawable/tree2"
+        android:scaleType="fitEnd"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="270dp"
+        android:id="@+id/tree3_iv"
+        android:src="@drawable/tree3"
+        android:scaleType="fitEnd"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="270dp"
+        android:id="@+id/tree4_iv"
+        android:src="@drawable/tree4"
+        android:scaleType="fitEnd"
+        android:visibility="invisible" />
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="270dp"
+        android:id="@+id/tree5_iv"
+        android:background="@color/transparent"
+        android:src="@drawable/tree5"
+        android:scaleType="fitEnd"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="270dp"
+        android:id="@+id/tree6_iv"
+        android:background="@color/transparent"
+        android:src="@drawable/tree6"
+        android:scaleType="fitEnd"
+        android:visibility="visible" />
+-->
+
+</LinearLayout>

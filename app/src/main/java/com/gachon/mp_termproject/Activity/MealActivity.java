@@ -49,9 +49,9 @@ public class MealActivity extends AppCompatActivity{
     ViewGroup viewGroup;
     long pressedTime = 0;
     Toast toast;
-    int[] tree = new int[]{R.drawable.tree1, R.drawable.tree2, R.drawable.tree3,
+    int[] tree = {R.drawable.tree1, R.drawable.tree2, R.drawable.tree3,
             R.drawable.tree3, R.drawable.tree4, R.drawable.tree5, R.drawable.tree6};
-    int position = -1;
+    int position = 0;
     ImageView treeImage;
     TextView Date, secondTV;
     EditText secondET;
@@ -78,20 +78,34 @@ public class MealActivity extends AppCompatActivity{
             @Override
             public View makeView() {
                 ImageView imageView = new ImageView(MealActivity.this);
+                imageView.setImageResource(tree[position]);
                 return imageView;
             }
         });
-        mSwitcher.setInAnimation(this, android.R.anim.fade_in);
+
         mSwitcher.setInAnimation(this, android.R.anim.fade_out);
+        mSwitcher.setInAnimation(this, android.R.anim.fade_in);
        /* mSwitcher.setImageResource(tree[0]);*/
 
-        onSwitch(null);
+
+        try {
+            Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+                @Override
+                public void uncaughtException(Thread thread, Throwable ex) {
+                    ex.printStackTrace();
+                }
+            });
+        } catch (SecurityException e) {
+            e.printStackTrace();
         }
 
-    private void onSwitch(View view) {
-        mSwitcher.setBackgroundResource(tree[position]);
-        position = position + 1;
+
     }
+
+    /*private void onSwitch(View view) {
+        position = position + 1;
+        mSwitcher.setBackgroundResource(tree[position]);
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -132,6 +146,15 @@ public class MealActivity extends AppCompatActivity{
             LinearLayout timeCountSettingLV = findViewById(R.id.timeCountSettingLV);
             LinearLayout timeCountLV = findViewById(R.id.timeCountLV);
 
+            final Handler mealhandler = new Handler()
+            {
+                public void handleMessage(Message msg){
+                    position += 1;
+                    mSwitcher.setImageResource(tree[position]);
+                }
+            };
+
+
             startBtn.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -145,7 +168,7 @@ public class MealActivity extends AppCompatActivity{
 
                     key = second;
 
-                    treeGrow = (1000 * 60 * 40) / 5 ;
+                    treeGrow = 480;
                     treeSecond = 0;
                     int sethour = alarm_timepicker.getHour();
                     int setminute = alarm_timepicker.getMinute();
@@ -155,12 +178,19 @@ public class MealActivity extends AppCompatActivity{
                         @Override
                         public void run(){
                             if(treeSecond == treeGrow){
-                                onSwitch(null);
-                                treeSecond++;
-                                treeGrow += treeGrow;
+                                if(position != 5){
+                                    Message msg = mealhandler.obtainMessage();
+                                    mealhandler.sendMessage(msg);
+                                    treeSecond++;
+                                    treeGrow += treeGrow;
+                                } else{
+                                    treeGrow = 0;
+                                }
                             } else{
                                 treeSecond++;
                             }
+
+
                             if (second != 0) {
                                 second--;
                             }
